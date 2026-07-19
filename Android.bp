@@ -1,0 +1,88 @@
+//
+// RMX1931 (samurai) — Stock RUI F.14 OPlus/Oppo Camera port
+// Prebuilts from ColorOS / realmeUI F.14 global dump.
+//
+
+soong_namespace {
+}
+
+// ---------------------------------------------------------------------------
+// Camera application (privileged, original OEM signature)
+// ---------------------------------------------------------------------------
+android_app_import {
+    name: "OppoCamera",
+    owner: "oplus",
+    apk: "priv-app/OppoCamera/OppoCamera.apk",
+    presigned: true,
+    dex_preopt: {
+        enabled: false,
+    },
+    privileged: true,
+    product_specific: true,
+    overrides: [
+        "Camera2",
+        "Aperture",
+    ],
+    required: [
+        "privapp_whitelist_com.oppo.camera",
+        "hiddenapi_whitelist_com.oppo.camera",
+        "com.oppo.camera.unit.sdk",
+        "permissions_com.oppo.camera.unit.sdk",
+    ],
+}
+
+// ---------------------------------------------------------------------------
+// Framework: Camera Unit SDK
+// ---------------------------------------------------------------------------
+dex_import {
+    name: "com.oppo.camera.unit.sdk",
+    owner: "oplus",
+    jars: ["framework/com.oppo.camera.unit.sdk.jar"],
+    system_ext_specific: true,
+}
+
+// ---------------------------------------------------------------------------
+// Optional system_ext helper
+// ---------------------------------------------------------------------------
+cc_prebuilt_library_shared {
+    name: "libopluscameraservice",
+    owner: "oplus",
+    strip: {
+        none: true,
+    },
+    target: {
+        android_arm64: {
+            srcs: ["lib64/libopluscameraservice.so"],
+        },
+    },
+    compile_multilib: "64",
+    check_elf_files: false,
+    system_ext_specific: true,
+}
+
+// ---------------------------------------------------------------------------
+// XML prebuilts
+// ---------------------------------------------------------------------------
+prebuilt_etc {
+    name: "privapp_whitelist_com.oppo.camera",
+    system_ext_specific: true,
+    src: "etc/permissions/privapp-permissions-com.oppo.camera.xml",
+    sub_dir: "permissions",
+    filename_from_src: true,
+}
+
+prebuilt_etc {
+    name: "hiddenapi_whitelist_com.oppo.camera",
+    system_ext_specific: true,
+    src: "etc/sysconfig/hiddenapi-package-whitelist-com.oppo.camera.xml",
+    sub_dir: "sysconfig",
+    filename_from_src: true,
+}
+
+prebuilt_etc {
+    name: "permissions_com.oppo.camera.unit.sdk",
+    system_ext_specific: true,
+    src: "etc/permissions/com.oppo.camera.unit.sdk.xml",
+    sub_dir: "permissions",
+    filename_from_src: true,
+}

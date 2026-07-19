@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Allow stock OppoCamera (Android 11 target) to call hidden APIs on
+    newer AOSP (14/15/16). Without this, reflective / @hide Camera /
+    Surface / Media usage will crash with UnsupportedOperationException.
+-->
+<config>
+    <hidden-api-whitelisted-app package="com.oppo.camera" />
+</config>

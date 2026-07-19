@@ -1,0 +1,14 @@
+# Extra allows for OPlus APS / beauty / models under /odm/etc/camera
+# Base rules already exist in device/realme/samurai/sepolicy/vendor/hal_camera_default.te
+
+# Camera configs and models
+r_dir_file(hal_camera_default, vendor_configs_file)
+
+# DSP / ADSP skel access for ArcSoft HVX night/HDR
+allow hal_camera_default public_adsprpcd_file:file r_file_perms;
+
+# ION / GPU for APS pipeline
+allow hal_camera_default gpu_device:chr_file rw_file_perms;
+
+# Persist camera calibration
+# rw_dir_file(hal_camera_default, vendor_persist_camera_file) — already in DT
