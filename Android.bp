@@ -12,8 +12,11 @@ soong_namespace {
 android_app_import {
     name: "OppoCamera",
     owner: "oplus",
+    // Manifest modernized for A13+/A16 (targetSdk 33, media perms, exported).
+    // Stock F.14 bytecode — NOT a full A16 rewrite. See docs/A16_COMPAT.md.
     apk: "priv-app/OppoCamera/OppoCamera.apk",
-    presigned: true,
+    // Re-sign with platform at image build so priv-app grants match the ROM.
+    certificate: "platform",
     dex_preopt: {
         enabled: false,
     },

@@ -1,0 +1,5 @@
+compat/work/
+compat/*.jks
+compat/*-unsigned.apk
+compat/*-aligned.apk
+*.apk.idsig
