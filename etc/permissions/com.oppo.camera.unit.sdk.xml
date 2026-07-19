@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <permissions>
+    <!-- product_specific dex_import installs under /product/framework -->
     <library name="com.oppo.camera.unit.sdk"
-        file="/system_ext/framework/com.oppo.camera.unit.sdk.jar" />
+        file="/product/framework/com.oppo.camera.unit.sdk.jar" />
 </permissions>

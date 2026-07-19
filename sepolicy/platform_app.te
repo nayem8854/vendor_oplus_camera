@@ -1,13 +1,6 @@
-# Stock OppoCamera runs as platform_app / priv_app depending on signing.
-# Allow camera app to talk to HAL and read ODM camera configs.
-
-# Prefer collecting real denials on device; these are common baseline rules.
-
-allow platform_app hal_camera_hwservice:hwservice_manager find;
-allow platform_app hal_camera_service:service_manager find;
-binder_call(platform_app, hal_camera_default)
-
-# ODM camera configs (filters, models) sometimes read from app process
-# for pure-APK algorithms (beauty preview JNI, stickers, etc.)
-allow platform_app vendor_configs_file:dir search;
-allow platform_app vendor_configs_file:file r_file_perms;
+# Intentionally empty.
+#
+# Stock OppoCamera is a product priv-app (priv_app domain), not platform_app.
+# Cross-domain allows (binder_call to HAL, vendor_configs_file read) often hit
+# neverallow on AOSP 14–16 and break `sepolicy` compile. Add rules only after
+# collecting real `avc: denied` lines on a booted build.

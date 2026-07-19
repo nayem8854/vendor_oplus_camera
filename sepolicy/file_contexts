@@ -1,14 +1,4 @@
-# OPlus / Oppo camera paths (odm)
+# OPlus camera configs under ODM (models, LUTs, APS XML trees).
+# Library labels intentionally omitted — default vendor_file/odm labeling
+# avoids neverallow fights; collect denials on device if app cannot mmap.
 /odm/etc/camera(/.*)?    u:object_r:vendor_configs_file:s0
-/odm/lib64/libaps.*\.so  u:object_r:same_process_hal_file:s0
-/odm/lib64/libFaceBeauty.*\.so  u:object_r:same_process_hal_file:s0
-/odm/lib64/libAlgo.*\.so u:object_r:same_process_hal_file:s0
-/odm/lib64/libarcsoft.*\.so u:object_r:same_process_hal_file:s0
-/odm/lib64/libst.*\.so   u:object_r:same_process_hal_file:s0
-/odm/lib64/libSNPE.*\.so u:object_r:same_process_hal_file:s0
-/odm/lib64/libsnpe.*\.so u:object_r:same_process_hal_file:s0
-/odm/lib64/libVD.*\.so   u:object_r:same_process_hal_file:s0
-/odm/lib64/libAnc.*\.so  u:object_r:same_process_hal_file:s0
-/odm/lib64/libanc.*\.so  u:object_r:same_process_hal_file:s0
-/odm/lib64/libPolarrRender\.so u:object_r:same_process_hal_file:s0
-/odm/lib64/libbsproxy\.so u:object_r:same_process_hal_file:s0

@@ -50,8 +50,11 @@ PRODUCT_PACKAGES += \
     com.oppo.camera.unit.sdk \
     permissions_com.oppo.camera.unit.sdk \
     privapp_whitelist_com.oppo.camera \
-    hiddenapi_whitelist_com.oppo.camera \
-    libopluscameraservice
+    hiddenapi_whitelist_com.oppo.camera
+
+# NOTE: libopluscameraservice is intentionally NOT packaged.
+# It links ColorOS-only / old HIDL symbols (vendor.oplus.hardware.commondcs,
+# private libcameraservice) and will not load cleanly on pure AOSP 16.
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.oplus.system.camera.name=com.oppo.camera \
