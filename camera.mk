@@ -15,22 +15,28 @@ PRODUCT_SOONG_NAMESPACES += \
 TARGET_USES_OPLUS_CAMERA ?= true
 
 # =============================================================================
-# Always: ODM algo libs missing from historical proprietary extract
+# Always: algo libs missing from historical proprietary extract
 # libAlgoProcess NEEDED → libapsjpeg, libapsexif, libbsproxy, …
+#
+# Installed under /vendor (not /odm): ODM partition is only 256MB and these
+# libs alone are ~40MB. Vendor has ample free space; libs have no hardcoded
+# /odm paths (models/configs stay under /odm/etc/camera).
+# libstblur_api.so is already listed in vendor public.libraries.txt.
 # =============================================================================
 PRODUCT_COPY_FILES += \
-    $(LOCAL_CAMERA_PATH)/lib64/odm/libapsjpeg.so:$(TARGET_COPY_OUT_ODM)/lib64/libapsjpeg.so \
-    $(LOCAL_CAMERA_PATH)/lib64/odm/libapsexif.so:$(TARGET_COPY_OUT_ODM)/lib64/libapsexif.so \
-    $(LOCAL_CAMERA_PATH)/lib64/odm/libstblur_api.so:$(TARGET_COPY_OUT_ODM)/lib64/libstblur_api.so \
-    $(LOCAL_CAMERA_PATH)/lib64/odm/libFaceBeautyCap.so:$(TARGET_COPY_OUT_ODM)/lib64/libFaceBeautyCap.so \
-    $(LOCAL_CAMERA_PATH)/lib64/odm/libFaceBeautyPre.so:$(TARGET_COPY_OUT_ODM)/lib64/libFaceBeautyPre.so \
-    $(LOCAL_CAMERA_PATH)/lib64/odm/libbsproxy.so:$(TARGET_COPY_OUT_ODM)/lib64/libbsproxy.so \
-    $(LOCAL_CAMERA_PATH)/lib64/odm/libPolarrRender.so:$(TARGET_COPY_OUT_ODM)/lib64/libPolarrRender.so \
-    $(LOCAL_CAMERA_PATH)/lib64/odm/libWaterMode.so:$(TARGET_COPY_OUT_ODM)/lib64/libWaterMode.so \
-    $(LOCAL_CAMERA_PATH)/lib64/odm/libTrafficMode.so:$(TARGET_COPY_OUT_ODM)/lib64/libTrafficMode.so \
-    $(LOCAL_CAMERA_PATH)/lib64/odm/libwatermark_photo.so:$(TARGET_COPY_OUT_ODM)/lib64/libwatermark_photo.so
+    $(LOCAL_CAMERA_PATH)/lib64/odm/libapsjpeg.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libapsjpeg.so \
+    $(LOCAL_CAMERA_PATH)/lib64/odm/libapsexif.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libapsexif.so \
+    $(LOCAL_CAMERA_PATH)/lib64/odm/libstblur_api.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libstblur_api.so \
+    $(LOCAL_CAMERA_PATH)/lib64/odm/libFaceBeautyCap.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libFaceBeautyCap.so \
+    $(LOCAL_CAMERA_PATH)/lib64/odm/libFaceBeautyPre.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libFaceBeautyPre.so \
+    $(LOCAL_CAMERA_PATH)/lib64/odm/libbsproxy.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libbsproxy.so \
+    $(LOCAL_CAMERA_PATH)/lib64/odm/libPolarrRender.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libPolarrRender.so \
+    $(LOCAL_CAMERA_PATH)/lib64/odm/libWaterMode.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libWaterMode.so \
+    $(LOCAL_CAMERA_PATH)/lib64/odm/libTrafficMode.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libTrafficMode.so \
+    $(LOCAL_CAMERA_PATH)/lib64/odm/libwatermark_photo.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libwatermark_photo.so
 
 # Supplemental F.14 camera assets (base sensor configs already in vendor/realme/samurai)
+# MUST stay on ODM: stock camera/algo blobs hardcode /odm/etc/camera/...
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(LOCAL_CAMERA_PATH)/etc/camera/darksight,$(TARGET_COPY_OUT_ODM)/etc/camera/darksight) \
     $(call find-copy-subdir-files,*,$(LOCAL_CAMERA_PATH)/etc/camera/fb_model,$(TARGET_COPY_OUT_ODM)/etc/camera/fb_model) \

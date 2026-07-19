@@ -1,11 +1,15 @@
 # Stock OppoCamera runs as platform_app / priv_app depending on signing.
 # Allow camera app to talk to HAL and read ODM camera configs.
+#
+# Only attribute as a *client* of the camera HAL. Do not call
+# hal_client_domain() here: when target_full_treble=false (recovery sepolicy),
+# that macro also typeattributes the domain as full `hal_camera`, which inherits
+# camera_device / video_device / sys_nice allows and violates app.te neverallows.
+# Client membership alone grants service/hwservice find + binder via public
+# rules in system/sepolicy/private/hal_camera.te.
 
-# Prefer collecting real denials on device; these are common baseline rules.
-
-allow platform_app hal_camera_hwservice:hwservice_manager find;
-allow platform_app hal_camera_service:service_manager find;
-binder_call(platform_app, hal_camera_default)
+typeattribute platform_app halclientdomain;
+typeattribute platform_app hal_camera_client;
 
 # ODM camera configs (filters, models) sometimes read from app process
 # for pure-APK algorithms (beauty preview JNI, stickers, etc.)
